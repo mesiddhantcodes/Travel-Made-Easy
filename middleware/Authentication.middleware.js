@@ -26,7 +26,16 @@ const AuthenticationMiddleware = {
         );
         return token;
     },
-
+    verifyEmailToken: (token) => {
+        try {
+            let decodedToken = decodeURIComponent(token);
+            let decoded = jwt.verify(decodedToken, JWT_SECRET);
+            return decoded;
+        } 
+        catch (error) {
+            return false;
+        }
+    }
 
 
 
