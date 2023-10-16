@@ -31,8 +31,6 @@ const AuthController =
                 message: "Logged in successfully",
                 token: token
             });
-
-
         } catch (err) {
             return res.status(500).json({ message: err.message });
         }
