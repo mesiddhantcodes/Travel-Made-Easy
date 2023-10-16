@@ -49,6 +49,10 @@ var userSchema = new mongoose.Schema({
         trim: true,
         minlength: 3
     },
+    isEmailVerified: {
+        type: Boolean,
+        default: false,
+    },
 
 });
 

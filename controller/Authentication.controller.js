@@ -1,9 +1,11 @@
+const AuthenticationMiddleware = require('../middleware/Authentication.middleware');
 const userModel = require('../models/User.model');
 const bcrypt = require('bcrypt');
+const { sendEmail } = require('../utils/emailVerification');
 // const 
 
 
-const AuthController = 
+const AuthController =
 {
     loginUser: async (req, res) => {
         const { loginId, password } = req.body;
@@ -21,8 +23,15 @@ const AuthController =
             if (!isMatch) {
                 return res.status(400).json({ message: "Incorrect password" });
             }
-            res.send(user)
-            return res.status(200).json({ message: "Logged in successfully" });
+            const token = AuthenticationMiddleware.generateToken(user);
+
+            return res.status(200).json({
+                status: "success",
+                data: user,
+                message: "Logged in successfully",
+                token: token
+            });
+
 
         } catch (err) {
             return res.status(500).json({ message: err.message });
@@ -46,9 +55,45 @@ const AuthController =
                 phone,
                 address
             });
-            await user.save();
-        
-            return res.status(200).json({ message: "User registered successfully" });
+            let datasaved = await user.save();
+            if (datasaved) {
+                const token = AuthenticationMiddleware.generateToken({ email: email });
+                const isMailSent = await sendEmail(email, token);
+                if (!isMailSent) {
+                    return res.send("Email is not sent");
+                }
+                return res.send("User registered successfully please verify your email");
+            }
+            else {
+                return res.send(
+                    "Somthing went wrong user is not registered due to error"
+                );
+            }
+        }
+        catch (err) {
+            return res.status(500).json({ message: err.message });
+        }
+    },
+    verifyEmail: async (req, res) => {
+        try {
+            const { token } = req.params;
+            const decodedToken = await AuthenticationMiddleware.verifyEmailToken(token);
+            if (decodedToken) {
+                let ifUserFounded = await userModel.findOne({
+                    email: decodedToken.email,
+                });
+                if (ifUserFounded) {
+                    ifUserFounded.isEmailVerified = true;
+                    let isUserSaved = await ifUserFounded.save();
+                    if (isUserSaved) {
+                        return res.status(200).send("Email verified successfully");
+                    } else {
+                        return res.status(500).send("Something went wrong");
+                    }
+                } else {
+                    return res.status(400).send("User not found");
+                }
+            }
         }
         catch (err) {
             return res.status(500).json({ message: err.message });
