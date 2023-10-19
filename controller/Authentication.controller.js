@@ -109,6 +109,7 @@ const AuthController =
     },
     sendOtp: async (req, res) => {
         const { email } = req.body;
+
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 465,
@@ -120,11 +121,25 @@ const AuthController =
             },
         });
         const otp = generateOtp();
+        const otpText = `
+            Dear User,
+
+            We've received a request to reset your password for your ROVE-Travel Made Easy account. Your One-Time Password (OTP) for password reset is:
+
+            ${otp}
+
+            Please use this OTP to complete the password reset process. If you didn't request this password reset, please contact our support team immediately.
+
+            Thank you for choosing ROVE-Travel Made Easy!
+
+            Sincerely,
+            The ROVE Team
+        `;
         const mailOptions = {
-            from: process.env.EMAIL,
+            from: "ROVE-Travel Made Easy",
             to: email,
             subject: "OTP for password reset",
-            text: `Your OTP is ${otp}`,
+            text: otpText,
         };
         try {
 
