@@ -7,25 +7,7 @@ var userSchema = new mongoose.Schema({
         trim: true,
         minlength: 3
     },
-    password: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 3
-    },
     name: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 3
-    },
-    branch: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 3
-    },
-    year: {
         type: String,
         required: true,
         trim: true,
@@ -37,23 +19,49 @@ var userSchema = new mongoose.Schema({
         trim: true,
         minlength: 3
     },
-    phone: {
+    isEmailVerified: {
+        type: Boolean,
+        default: false,
+    },
+    
+    otp: {
+        type: String,
+    },
+    phoneNumber: {
         type: String,
         required: true,
         trim: true,
         minlength: 3
     },
+    password: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 3
+    },
+
+    branch: {
+        type: String,
+        required: true,
+        trim: true,
+        minlength: 3
+    },
+    year: {
+        type: String,
+        required: true,
+        enum: ['1', '2', '3', '4']
+    },
+
+
+
     address: {
         type: String,
         required: true,
         trim: true,
         minlength: 3
     },
-    isEmailVerified: {
-        type: Boolean,
-        default: false,
-    },
+
 
 });
 
-module.exports= mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema);

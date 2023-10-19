@@ -1,18 +1,21 @@
 const nodemailer = require('nodemailer');
 
-const sendEmail = async (email, token) => {
+const sendEmail = async (email, token,name) => {
     const subject = "Email Verification";
     const encodedToken = encodeURIComponent(token);
-
+    
     const verificationLink = `http://localhost:3000/auth/verify/${encodedToken}`;
     const textSend = `
-    <p>Dear User,</p>
-    <p>Thank you for signing up for our service. To complete your registration, please click the following link to verify your email:</p>
-    <p><a href="${verificationLink}">Verify your email</a></p>
-    <p>If you did not sign up for this service, please ignore this email.</p>
-    <p style="margin-top: 10px;">Best regards,</p>
-    <p style="margin-top: 10px;">ROVE-Travel Made Easy</p>
-`;
+    Dear ${name},
+
+    Thank you for signing up for our service. To complete your registration, please click the following link to verify your email:
+    Verify your email: ${verificationLink}
+
+    If you did not sign up for this service, please ignore this email.
+
+    Best regards,
+    ROVE-Travel Made Easy   
+    `;
     try {
         const transporter = nodemailer.createTransport({
             service: "gmail",

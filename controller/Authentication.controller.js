@@ -2,6 +2,10 @@ const AuthenticationMiddleware = require('../middleware/Authentication.middlewar
 const userModel = require('../models/User.model');
 const bcrypt = require('bcrypt');
 const { sendEmail } = require('../utils/emailVerification');
+
+const nodemailer = require('nodemailer');
+const { generateOtp } = require('../utils/otp');
+require("dotenv").config();
 // const 
 
 
@@ -27,7 +31,13 @@ const AuthController =
 
             return res.status(200).json({
                 status: "success",
-                data: user,
+                data: {
+                    name: user.name,
+                    email: user.email,
+                    phoneNumber: user.phoneNumber,
+                    address: user.address,
+                    collegeId: user.collegeId,
+                },
                 message: "Logged in successfully",
                 token: token
             });
@@ -37,7 +47,7 @@ const AuthController =
     },
     registerUser: async (req, res) => {
         try {
-            const { collegeId, password, name, branch, year, email, phone, address } = req.body;
+            const { collegeId, password, name, branch, year, email, phoneNumber, address } = req.body;
             const checkIfUserExists = await userModel.findOne({ collegeId });
             if (checkIfUserExists) {
                 return res.status(400).json({ message: "User already exists" });
@@ -50,13 +60,13 @@ const AuthController =
                 branch,
                 year,
                 email,
-                phone,
+                phoneNumber,
                 address
             });
             let datasaved = await user.save();
             if (datasaved) {
                 const token = AuthenticationMiddleware.generateToken({ email: email });
-                const isMailSent = await sendEmail(email, token);
+                const isMailSent = await sendEmail(email, token, name);
                 if (!isMailSent) {
                     return res.send("Email is not sent");
                 }
@@ -97,7 +107,67 @@ const AuthController =
             return res.status(500).json({ message: err.message });
         }
     },
+    sendOtp: async (req, res) => {
+        const { email } = req.body;
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.EMAIL_PASSWORD,
+            },
+        });
+        const otp = generateOtp();
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to: email,
+            subject: "OTP for password reset",
+            text: `Your OTP is ${otp}`,
+        };
+        try {
 
+            const ifuserExists = await userModel.findOne({ email: email });
+            if (!ifuserExists) {
+                return res.status(400).json({ message: "User not found" });
+            }
+            const result = await transporter.sendMail(mailOptions);
+            const isOtpsaved = await userModel.updateOne({ otp: otp });
+            if (!isOtpsaved) {
+                return res.status(400).json({ message: "OTP not saved" });
+            }
+
+
+            console.log(result);
+            return res.status(200).json({ message: "OTP sent successfully" });
+        }
+        catch (err) {
+            console.log(err);
+            return res.status(500).json({ message: err.message });
+        }
+    },
+    resetPassword: async (req, res) => {
+        const { email, newPassword, otp } = req.body;
+        try {
+            const user = await userModel.findOne({ email: email });
+            if (!user) {
+                return res.status(400).json({ message: "User not found" });
+            }
+            if (user.otp !== otp) {
+                return res.status(400).json({ message: "Invalid OTP" });
+            }
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            user.password = hashedPassword;
+            user.otp = null;
+            await user.save();
+
+            return res.status(200).json({ message: "Password updated successfully" });
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({ message: err.message });
+        }
+    },
 
 }
 
