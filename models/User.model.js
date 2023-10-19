@@ -23,7 +23,6 @@ var userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    
     otp: {
         type: String,
     },
@@ -39,21 +38,17 @@ var userSchema = new mongoose.Schema({
         trim: true,
         minlength: 3
     },
-
     branch: {
         type: String,
         required: true,
         trim: true,
-        minlength: 3
+        enum : ['CSE','EE','EC','IT']
     },
     year: {
         type: String,
         required: true,
         enum: ['1', '2', '3', '4']
     },
-
-
-
     address: {
         type: String,
         required: true,
