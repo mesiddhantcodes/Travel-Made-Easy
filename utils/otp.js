@@ -6,10 +6,7 @@ const generateOtp = () => {
     }
     return OTP;
 }
-const sendOtp = async (email) => {
-    
 
-}
 
 
 module.exports = { generateOtp };

@@ -27,7 +27,16 @@ const AuthController =
             if (!isMatch) {
                 return res.status(400).json({ message: "Incorrect password" });
             }
-            const token = AuthenticationMiddleware.generateToken(user);
+            const token = AuthenticationMiddleware.generateToken({
+                id: user._id,
+                email: user.email,
+                collegeId: user.collegeId,
+                name: user.name,
+                phoneNumber: user.phoneNumber,
+                address: user.address,
+                branch: user.branch,
+                year: user.year,
+            });
 
             return res.status(200).json({
                 status: "success",
@@ -121,20 +130,8 @@ const AuthController =
             },
         });
         const otp = generateOtp();
-        const otpText = `
-            Dear User,
+        const otpText = `Dear User,\n\nWe've received a request to reset your password for your ROVE-Travel Made Easy account. Your One-Time Password (OTP) for password reset is:\n\n${otp}\n\nPlease use this OTP to complete the password reset process. If you didn't request this password reset, please contact our support team immediately.\n\nThank you for choosing ROVE-Travel Made Easy!\n\nSincerely,\n\nThe ROVE Team`;
 
-            We've received a request to reset your password for your ROVE-Travel Made Easy account. Your One-Time Password (OTP) for password reset is:
-
-            ${otp}
-
-            Please use this OTP to complete the password reset process. If you didn't request this password reset, please contact our support team immediately.
-
-            Thank you for choosing ROVE-Travel Made Easy!
-
-            Sincerely,
-            The ROVE Team
-        `;
         const mailOptions = {
             from: "ROVE-Travel Made Easy",
             to: email,
@@ -142,7 +139,6 @@ const AuthController =
             text: otpText,
         };
         try {
-
             const ifuserExists = await userModel.findOne({ email: email });
             if (!ifuserExists) {
                 return res.status(400).json({ message: "User not found" });
@@ -152,8 +148,6 @@ const AuthController =
             if (!isOtpsaved) {
                 return res.status(400).json({ message: "OTP not saved" });
             }
-
-
             console.log(result);
             return res.status(200).json({ message: "OTP sent successfully" });
         }
@@ -182,6 +176,29 @@ const AuthController =
             console.log(err);
             return res.status(500).json({ message: err.message });
         }
+    },
+    updateUser: async (req, res) => {
+        const { email, phoneNumber } = req.body;
+        const { id } = req.user;
+        try {
+            const isUser = await userModel.findOne({ _id: id });
+            if (!isUser) {
+                return res.status(400).json({ message: "User not found" });
+            }
+            if (email) {
+                isUser.email = email;
+            }
+            if (phoneNumber) {
+                isUser.phoneNumber = phoneNumber;
+            }
+            await isUser.save();
+            return res.status(200).json({ message: "User updated successfully" });
+
+        }
+        catch(err){
+            return res.status(500).json({ message: err.message });
+        }   
+
     },
 
 }

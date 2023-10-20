@@ -9,5 +9,5 @@ router.post('/register', AuthenticationController.registerUser);
 router.get('/verify/:token', AuthenticationController.verifyEmail);
 router.post('/forgot-password', AuthenticationController.sendOtp);
 router.post('/reset-password', AuthenticationController.resetPassword);
-
+router.post('/updateUser', AuthenticationMiddleware.authenticate, AuthenticationController.updateUser);
 module.exports = router;    
