@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const busSchema = new mongoose.Schema({
 
-    // write the schema for bus 
     busNumber: {
         type: String,
         required: true,
@@ -10,6 +9,7 @@ const busSchema = new mongoose.Schema({
     },
     driverId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: 'Driver',
         required: true,
         trim: true,
         minlength: 3
@@ -21,18 +21,12 @@ const busSchema = new mongoose.Schema({
         minlength: 3
     },
     busRoute: {
-        type: String,
+        type: Object,
         required: true,
         trim: true,
-        minlength: 3
+        default: { startLocation: 0, endLocation: 0 }
     },
     busCapacity: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 3
-    },
-    busType: {
         type: String,
         required: true,
         trim: true,
@@ -44,18 +38,14 @@ const busSchema = new mongoose.Schema({
         trim: true,
         minlength: 3
     },
-    busLocation: {
-        type: String,
-        required: true,
+
+
+    location: {
+        type: Object,
+        required: false,
         trim: true,
-        minlength: 3
-    },
-    busDriver: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 3
-    },
+        default: { lat: 0, lng: 0 }
+    }
 });
 
 

@@ -195,11 +195,28 @@ const AuthController =
             return res.status(200).json({ message: "User updated successfully" });
 
         }
-        catch(err){
+        catch (err) {
             return res.status(500).json({ message: err.message });
-        }   
+        }
 
     },
+    updateUserLocation: async (req, res) => {
+        const { latitude, longitude } = req.body;
+        const { id } = req.user;
+        try {
+            const isUser = await userModel.findOne({ _id: id });
+            if (!isUser) {
+                return res.status(400).json({ message: "User not found" });
+            }
+            isUser.location = { lat: latitude, lng: longitude };
+            await isUser.save();
+            return res.status(200).json({ message: "User location updated successfully" });
+        }
+        catch (err) {
+            return res.status(500).json({ message: err.message });
+        }
+
+    }
 
 }
 

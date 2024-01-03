@@ -59,6 +59,16 @@ var userSchema = new mongoose.Schema({
         trim: true,
         minlength: 3
     },
+    busAssigned: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Bus',
+    },
+    location: {
+        type: Object,
+        required: false,
+        trim: true,
+        default: { lat: 0, lng: 0 }
+    }
 
 
 });
