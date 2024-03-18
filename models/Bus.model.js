@@ -14,6 +14,7 @@ const busSchema = new mongoose.Schema({
         trim: true,
         minlength: 3
     },
+    // driver id 
     driverPhoneNumber: {
         type: String,
         required: true,
@@ -29,8 +30,7 @@ const busSchema = new mongoose.Schema({
     busCapacity: {
         type: String,
         required: true,
-        trim: true,
-        minlength: 3
+        trim: true
     },
     busStatus: {
         type: String,
