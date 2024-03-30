@@ -5,7 +5,7 @@ const busSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 3
+        enum: ['B1', 'B2', 'B3', 'K1','K2','K3','R1','R2','R3']
     },
     driverId: {
         type: mongoose.Schema.Types.ObjectId,
