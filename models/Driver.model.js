@@ -32,6 +32,7 @@ const driverSchema = new mongoose.Schema({
     },
     busAssigned: {
         type: mongoose.Schema.Types.ObjectId,
+        
         ref:'Bus',
     },
     location: {
