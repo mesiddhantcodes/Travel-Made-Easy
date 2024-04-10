@@ -12,6 +12,11 @@ const getBus = catchAsync(async (req, res) => {
   res.send(bus);
 });
 
+const getAllBuses = catchAsync(async (req, res) => {
+  const buses = await busService.getAllBuses();
+  res.send(buses);
+});
+
 const updateBus = catchAsync(async (req, res) => {
   const bus = await busService.updateBusById(req.params.busId, req.body);
   res.send(bus);
@@ -23,7 +28,7 @@ const deleteBus = catchAsync(async (req, res) => {
 });
 
 const getBusLocation = catchAsync(async (req, res) => {
- 
+
 });
 
 module.exports = {
@@ -31,4 +36,5 @@ module.exports = {
   getBus,
   updateBus,
   deleteBus,
+  getAllBuses,
 };

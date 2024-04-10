@@ -8,6 +8,10 @@ const addBus = async (bus) => {
   return Bus.create(bus);
 };
 
+const getAllBuses = async () => {
+  return Bus.find();
+};
+
 const getBusById = async (id) => {
   const bus = await Bus.findById(id);
   if (!bus) {
@@ -40,4 +44,5 @@ module.exports = {
   getBusById,
   updateBusById,
   deleteBusById,
+  getAllBuses
 };
