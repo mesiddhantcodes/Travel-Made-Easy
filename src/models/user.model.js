@@ -9,37 +9,37 @@ const userSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
+
       trim: true,
     },
     year: {
       type: Number,
-      required: true,
+
       trim: true,
     },
     branch: {
       type: String,
-      required: true,
+
       trim: true,
     },
     roll: {
       type: String,
-      required: true,
+
       trim: true,
     },
     phone: {
       type: String,
-      required: true,
       trim: true,
+      required: true,
     },
     course: {
       type: String,
-      required: true,
       trim: true,
     },
     email: {
       type: String,
-      required: true,
       unique: true,
+      required: true,
       trim: true,
       lowercase: true,
       validate(value) {
@@ -50,6 +50,7 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
+
       required: true,
       trim: true,
       minlength: 8,
@@ -63,6 +64,7 @@ const userSchema = mongoose.Schema(
     role: {
       type: String,
       enum: roles,
+      required: true,
       default: 'user',
     },
     isEmailVerified: {
@@ -71,7 +73,6 @@ const userSchema = mongoose.Schema(
     },
     stoppage: {
       type: String,
-      required: true,
       trim: true,
     },
   },
