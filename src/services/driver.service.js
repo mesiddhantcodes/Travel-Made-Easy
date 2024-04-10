@@ -9,6 +9,10 @@ const addDriver = async (driver) => {
   return User.create(driver);
 };
 
+const getAllDrivers = async () => {
+  return User.find({ role: 'driver' });
+};
+
 const getDriverByBusId = async (busId) => {
   const bus = await Bus.findOne({ bus: busId });
   const driver = await User.findById(bus.driver);
@@ -27,4 +31,5 @@ module.exports = {
   getDriverByBusId,
   addDriver,
   updateDriverLocation,
+  getAllDrivers,
 };

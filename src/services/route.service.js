@@ -60,6 +60,8 @@ const updateStoppageInRoute = async (routeId, stoppageId, updateBody) => {
   return route;
 };
 
+
+
 const getStoppageById = async (routeId, stoppageId) => {
   const route = await getRouteById(routeId);
   const stoppage = route.stoppages.find((stoppage) => stoppage.id === stoppageId);

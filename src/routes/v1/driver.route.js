@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.route('/bus/:id').get(auth('getBus'), driverController.getDriverByBusId);
 router.route('/').post(driverController.createDriver);
+router.route('/').get(driverController.getAllDrivers);
 router.route('/location').patch(auth('updateDriverLocation'), driverController.updateDriverLocation);
 module.exports = router;

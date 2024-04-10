@@ -13,6 +13,11 @@ const getDriver = catchAsync(async (req, res) => {
   res.send(driver);
 });
 
+const getAllDrivers = catchAsync(async (req, res) => {
+  const drivers = await driverService.getAllDrivers();
+  res.send(drivers);
+});
+
 const getDriverByBusId = catchAsync(async (req, res) => {
   const driver = await driverService.getDriverByBusId(req.params.busId);
   res.send(driver);
@@ -28,4 +33,5 @@ module.exports = {
   getDriverByBusId,
   getDriver,
   updateDriverLocation,
+  getAllDrivers,
 };
