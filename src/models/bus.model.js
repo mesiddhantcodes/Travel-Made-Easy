@@ -10,7 +10,7 @@ const busSchema = new mongoose.Schema({
     trim: true,
     minlength: 3,
   },
-  chesiNumber: {
+  busNumber: {
     type: String,
     required: true,
     trim: true,
@@ -22,20 +22,13 @@ const busSchema = new mongoose.Schema({
     trim: true,
     minlength: 3,
   },
-  from: {
-    type: String,
+  capacity: {
+    type: Number,
     required: true,
-    trim: true,
-    minlength: 3,
+    default: 0,
   },
-
-  to: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 3,
-  },
-  route: {
+  
+  route: {  
     type: Array,
     required: false,
     default: [],
