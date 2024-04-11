@@ -71,15 +71,41 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    //stoppage is lat long and name
     stoppage: {
-      type: String,
-      trim: true,
+      name: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      location: {
+       lat: {
+        type: String,
+        required: true,
+        trim: true,
+       },
+        long: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+      },
     },
   },
   {
     timestamps: true,
   }
 );
+
+// stoppage is lat long convert them to geojson
+userSchema.virtual('stoppage.geojson').get(function () {
+  return {
+    type: 'Point',
+    coordinates: [this.stoppage.location.lat, this.stoppage.location.long],
+  };
+});
+
+
 
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
@@ -105,6 +131,8 @@ userSchema.methods.isPasswordMatch = async function (password) {
   const user = this;
   return bcrypt.compare(password, user.password);
 };
+
+
 
 userSchema.pre('save', async function (next) {
   const user = this;

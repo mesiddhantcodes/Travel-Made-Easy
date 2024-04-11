@@ -6,8 +6,8 @@ const routeSchema = new mongoose.Schema({
     trim: true,
     minlength: 3,
   },
-  stoppages: {
-    type: [
+  stoppages: [
+   
       {
         id: {
           type: String,
@@ -20,20 +20,41 @@ const routeSchema = new mongoose.Schema({
           minlength: 3,
         },
         location: {
-         
-            type: String,
+          lat: {
+            type: Number,
             required: true,
-        },
-      },
-    ],
-    required: false,
-    default: [],
-  },
+          },
+          long: {
+            type: Number,
+            required: true,
+          },
+        }
+      }
+ 
+  ],
   bus: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Bus',
   },
 });
+
+routeSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: (doc, ret) => {
+    delete ret._id;
+  },
+});
+
+routeSchema.virtual("stoppages.geojson").get(function () {
+  return this.stoppages.map((stoppage) => {
+    return {
+      type: 'Point',
+      coordinates: [stoppage.location.lat, stoppage.location.long],
+    };
+  });
+});
+
 
 const Route = mongoose.model('Route', routeSchema);
 
