@@ -72,8 +72,13 @@ const getStoppageById = async (routeId, stoppageId) => {
 };
 
 
-const getAllStoppages= async () => {
-  return await Route.find()
+const getAllStoppages = async () => {
+  let routes = await Route.find();
+  let stoppages = [];
+  routes.forEach(route => {
+    stoppages.push(...route.stoppages);
+  });
+  return stoppages;
 
 }
 
