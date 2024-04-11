@@ -46,7 +46,13 @@ const updateStoppage = async (req, res) => {
   res.send(route);
 };
 
+const getAllStoppages = async (req, res) => {
+  const stoppages = await routeService.getAllStoppages();
+  res.send(stoppages);
+};
+
 module.exports = {
+  getAllStoppages,
   createRoute,
   getRoutes,
   getRouteById,

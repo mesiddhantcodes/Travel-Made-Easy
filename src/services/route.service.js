@@ -71,10 +71,17 @@ const getStoppageById = async (routeId, stoppageId) => {
   return stoppage;
 };
 
+
+const getAllStoppages= async () => {
+  return await Route.find()
+
+}
+
 module.exports = {
   createRoute,
   getRoutes,
   getRouteById,
+  getAllStoppages,
   getStoppageById,
   updateRouteById,
   deleteRouteById,

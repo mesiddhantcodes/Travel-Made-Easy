@@ -6,13 +6,9 @@ const routeSchema = new mongoose.Schema({
     trim: true,
     minlength: 3,
   },
-  stoppages: [
-   
+  stoppages: {
+    type: [
       {
-        id: {
-          type: String,
-          required: true,
-        },
         name: {
           type: String,
           required: true,
@@ -28,10 +24,10 @@ const routeSchema = new mongoose.Schema({
             type: Number,
             required: true,
           },
-        }
-      }
- 
-  ],
+        },
+      },
+    ],
+  },
   bus: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Bus',
