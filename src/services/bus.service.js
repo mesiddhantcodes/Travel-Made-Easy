@@ -1,4 +1,6 @@
+const httpStatus = require('http-status');
 const { Bus, User } = require('../models');
+const ApiError = require('../utils/ApiError');
 
 const addBus = async (bus) => {
   let checkIfUserIsDriver = await User.findById(bus.driver);
