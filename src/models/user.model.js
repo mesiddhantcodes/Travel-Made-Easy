@@ -75,18 +75,17 @@ const userSchema = mongoose.Schema(
     stoppage: {
       name: {
         type: String,
-        required: true,
+
         trim: true,
       },
       location: {
-       lat: {
-        type: String,
-        required: true,
-        trim: true,
-       },
+        lat: {
+          type: String,
+
+          trim: true,
+        },
         long: {
           type: String,
-          required: true,
           trim: true,
         },
       },
