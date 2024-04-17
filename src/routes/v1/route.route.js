@@ -19,6 +19,7 @@ router
 
 router.route('/:routeId/stoppage').post(routeController.addStoppage);
 
+// router.route('/:routeId/stoppage/').post(routeController.addStoppage)
 
 
 module.exports = router;
