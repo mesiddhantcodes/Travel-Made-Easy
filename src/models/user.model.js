@@ -3,9 +3,11 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
 const { roles } = require('../config/roles');
+const { string } = require('joi');
 
 const userSchema = mongoose.Schema(
   {
+   
     name: {
       type: String,
       required: true,
@@ -72,23 +74,27 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     //stoppage is lat long and name
-    stoppage: {
-      name: {
-        type: String,
-
-        trim: true,
-      },
-      location: {
-        lat: {
-          type: String,
-
-          trim: true,
+    stoppage:  {
+      type: [
+        {
+          name: {
+            type: String,
+            required: true,
+            trim: true,
+            minlength: 3,
+          },
+          location: {
+            lat: {
+              type: Number,
+              required: true,
+            },
+            long: {
+              type: Number,
+              required: true,
+            },
+          },
         },
-        long: {
-          type: String,
-          trim: true,
-        },
-      },
+      ],
     },
   },
   {
@@ -103,8 +109,6 @@ userSchema.virtual('stoppage.geojson').get(function () {
     coordinates: [this.stoppage.location.lat, this.stoppage.location.long],
   };
 });
-
-
 
 // add plugin that converts mongoose to json
 userSchema.plugin(toJSON);
@@ -130,8 +134,6 @@ userSchema.methods.isPasswordMatch = async function (password) {
   const user = this;
   return bcrypt.compare(password, user.password);
 };
-
-
 
 userSchema.pre('save', async function (next) {
   const user = this;

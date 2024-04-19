@@ -28,10 +28,7 @@ const routeSchema = new mongoose.Schema({
       },
     ],
   },
-  bus: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Bus',
-  },
+
 });
 
 routeSchema.set('toJSON', {

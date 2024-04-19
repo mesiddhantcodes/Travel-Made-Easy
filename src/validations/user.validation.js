@@ -12,7 +12,7 @@ const createUser = {
     year: Joi.number().required(),
     roll: Joi.string().required(),
     phone: Joi.string().required(),
-    stoppage: Joi.string()
+    stoppage: Joi.string(),
   }),
 };
 
@@ -41,6 +41,13 @@ const updateUser = {
       email: Joi.string().email(),
       password: Joi.string().custom(password),
       name: Joi.string(),
+      stoppage: Joi.string(),
+      phone: Joi.string(),
+      course: Joi.string(),
+      branch: Joi.string(),
+
+      year: Joi.number(),
+      roll: Joi.string(),
     })
     .min(1),
 };

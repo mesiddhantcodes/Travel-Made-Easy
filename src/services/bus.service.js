@@ -24,9 +24,11 @@ const getBusById = async (id) => {
 
 const updateBusById = async (id, updateBody) => {
   const bus = await getBusById(id);
+  console.log(bus);
   if (!bus) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Bus not found');
   }
+  console.log(updateBody)
   Object.assign(bus, updateBody);
   await bus.save();
   return bus;

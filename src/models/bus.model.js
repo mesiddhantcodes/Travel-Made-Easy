@@ -8,27 +8,24 @@ const busSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    minlength: 3,
   },
   busNumber: {
     type: String,
     required: true,
     trim: true,
-    minlength: 3,
   },
   license: {
     type: String,
     required: true,
     trim: true,
-    minlength: 3,
   },
   capacity: {
     type: Number,
     required: true,
     default: 0,
   },
-  
-  route: {  
+
+  route: {
     type: Array,
     required: false,
     default: [],

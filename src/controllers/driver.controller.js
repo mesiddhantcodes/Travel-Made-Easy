@@ -9,7 +9,8 @@ const createDriver = catchAsync(async (req, res) => {
 });
 
 const getDriver = catchAsync(async (req, res) => {
-  const driver = await driverService.getDriver(req.params.driverId);
+  const {id} = req.params;
+  const driver = await driverService.getDriver(id);
   res.send(driver);
 });
 
@@ -28,7 +29,14 @@ const updateDriverLocation = catchAsync(async (req, res) => {
   res.send(driver);
 });
 
+const updateDriver = catchAsync(async (req, res) => {
+  const driver = await driverService.updateDriver(req.params.driverId, req.body);
+  // console.log(driver);
+  res.send(driver);
+});
+
 module.exports = {
+  updateDriver,
   createDriver,
   getDriverByBusId,
   getDriver,
