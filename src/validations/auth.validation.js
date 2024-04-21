@@ -12,7 +12,7 @@ const register = {
     year: Joi.number(),
     roll: Joi.string(),
     phone: Joi.string().required(),
-    stoppage: Joi.object()
+    stoppage: Joi.string()
   }),
 };
 

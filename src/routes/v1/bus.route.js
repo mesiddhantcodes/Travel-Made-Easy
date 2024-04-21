@@ -12,7 +12,7 @@ router
 router
   .route('/:busId')
   .get(busController.getBus)
-  .patch( busController.updateBus)
+  .put( busController.updateBus)
   .delete( busController.deleteBus);
 
 

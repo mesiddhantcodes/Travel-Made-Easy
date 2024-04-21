@@ -28,7 +28,7 @@ const updateBusById = async (id, updateBody) => {
   if (!bus) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Bus not found');
   }
-  console.log(updateBody)
+  console.log("=======",updateBody)
   Object.assign(bus, updateBody);
   await bus.save();
   return bus;

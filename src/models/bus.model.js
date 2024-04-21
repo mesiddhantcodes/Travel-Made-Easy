@@ -26,9 +26,9 @@ const busSchema = new mongoose.Schema({
   },
 
   route: {
-    type: Array,
+    type: String,
     required: false,
-    default: [],
+  
   },
 });
 
