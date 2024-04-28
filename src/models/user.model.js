@@ -7,7 +7,6 @@ const { string } = require('joi');
 
 const userSchema = mongoose.Schema(
   {
-   
     name: {
       type: String,
       required: true,
@@ -74,8 +73,13 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     //stoppage is lat long and name
-    stoppage:  {
-      type: String
+    stoppage: {
+      type: String,
+    },
+
+    assignedBus: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'Bus',
     },
   },
   {

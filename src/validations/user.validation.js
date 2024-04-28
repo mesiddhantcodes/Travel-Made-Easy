@@ -13,6 +13,7 @@ const createUser = {
     roll: Joi.string().required(),
     phone: Joi.string().required(),
     stoppage: Joi.string(),
+    assignedBus: Joi.string(),
   }),
 };
 
