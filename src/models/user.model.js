@@ -78,8 +78,7 @@ const userSchema = mongoose.Schema(
     },
 
     assignedBus: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'Bus',
+      type: String
     },
   },
   {

@@ -49,6 +49,7 @@ const updateUser = {
 
       year: Joi.number(),
       roll: Joi.string(),
+      assignedBus:Joi.string()
     })
     .min(1),
 };

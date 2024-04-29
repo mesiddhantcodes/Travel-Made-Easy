@@ -14,7 +14,7 @@ const login = catchAsync(async (req, res) => {
   const user = await authService.loginUserWithEmailAndPassword(email, password);
   const tokens = await tokenService.generateAuthTokens(user);
   let bus=await Bus.findOne({_id: user.assignedBus});
-  console.log(user.assignedBus)
+  console.log(bus)
   // console.log({ user, tokens })
   res.send({ user, tokens ,bus});
 });
