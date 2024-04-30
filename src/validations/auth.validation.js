@@ -14,6 +14,7 @@ const register = {
     phone: Joi.string().required(),
     stoppage: Joi.string(),
     assignedBus: Joi.string(),
+    college: Joi.string(),
   }),
 };
 

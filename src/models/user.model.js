@@ -76,10 +76,15 @@ const userSchema = mongoose.Schema(
     stoppage: {
       type: String,
     },
+    college:{
+      type: String,
+
+    },
 
     assignedBus: {
       type: String
     },
+    
   },
   {
     timestamps: true,
