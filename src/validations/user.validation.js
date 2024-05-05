@@ -47,7 +47,7 @@ const updateUser = {
       phone: Joi.string(),
       course: Joi.string(),
       branch: Joi.string(),
-
+      college: Joi.string(),
       year: Joi.number(),
       roll: Joi.string(),
       assignedBus:Joi.string()

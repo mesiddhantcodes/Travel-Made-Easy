@@ -74,11 +74,15 @@ const getStoppageById = async (routeId, stoppageId) => {
 
 const getAllStoppages = async () => {
   let routes = await Route.find();
-  let stoppages = [];
-  routes.forEach(route => {
-    stoppages.push(...route.stoppages);
-  });
-  return stoppages;
+  // here duplicate data is creating 
+  let stoppages = routes.map(route => route.stoppages);
+  return stoppages.flat();
+
+  // let stoppages = [];
+  // routes.forEach(route => {
+  //   stoppages.push(...route.stoppages);
+  // });
+  // return stoppages;
 
 }
 
