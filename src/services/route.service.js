@@ -74,10 +74,13 @@ const getStoppageById = async (routeId, stoppageId) => {
 
 const getAllStoppages = async () => {
   let routes = await Route.find();
-  // here duplicate data is creating 
+  // here the id is created by mongoose so we need to remove it
   let stoppages = routes.map(route => route.stoppages);
   return stoppages.flat();
 
+  // let stoppages = routes.map(route => route.stoppages);
+  // return stoppages.flat();
+  
   // let stoppages = [];
   // routes.forEach(route => {
   //   stoppages.push(...route.stoppages);
