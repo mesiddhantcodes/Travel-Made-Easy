@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const routeSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    // required: true,
     trim: true,
     minlength: 3,
   },
@@ -11,18 +11,18 @@ const routeSchema = new mongoose.Schema({
       {
         name: {
           type: String,
-          required: true,
+          // required: true,
           trim: true,
           minlength: 3,
         },
         location: {
           lat: {
             type: Number,
-            required: true,
+            // required: true,
           },
           long: {
             type: Number,
-            required: true,
+            // required: true,
           },
         },
       },
